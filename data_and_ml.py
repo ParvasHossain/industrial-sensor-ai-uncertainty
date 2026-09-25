@@ -13,15 +13,15 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-# ১. NumPy & Pandas: ডাটা সিমুলেশন ও ডাটাফ্রেমে রূপান্তর
+# 1. NumPy & Pandas: Data simulation And dataframe transformation 
 np.random.seed(42)
 n_samples = 1000
 
-temperature = np.random.normal(loc=70, scale=10, size=n_samples) # সেন্সর রিডিং
+temperature = np.random.normal(loc=70, scale=10, size=n_samples) # sensor reading 
 vibration = np.random.normal(loc=0.5, scale=0.15, size=n_samples)
 pressure = np.random.normal(loc=101.3, scale=5, size=n_samples)
 
-# ২. SciPy: Uncertainty Budget & Standard Deviation Calculation
+# 2. SciPy: Uncertainty Budget & Standard Deviation Calculation
 temp_std = np.std(temperature)
 temp_sem = stats.sem(temperature) # Standard Error of Mean (Uncertainty)
 vibration_uncertainty = stats.iqr(vibration) # Interquartile Range
@@ -36,7 +36,7 @@ df = pd.DataFrame({
     'Failure': failure
 })
 
-# ৩. Seaborn & Matplotlib: ডাটা ভিজ্যুয়ালাইজেশন চিত্র তৈরি
+# 3. Seaborn & Matplotlib: making data visualization figure 
 def generate_plots():
     plt.figure(figsize=(10, 4))
     sns.scatterplot(data=df, x='Temperature', y='Vibration', hue='Failure', palette='coolwarm')
@@ -46,7 +46,7 @@ def generate_plots():
 
 generate_plots()
 
-# ৪. Scikit-Learn: Machine Learning Model (Random Forest)
+# 4. Scikit-Learn: Machine Learning Model (Random Forest)
 X = df[['Temperature', 'Vibration', 'Pressure']]
 y = df['Failure']
 
@@ -60,7 +60,7 @@ rf_model = RandomForestClassifier(n_estimators=50, random_state=42)
 rf_model.fit(X_train_scaled, y_train)
 rf_acc = accuracy_score(y_test, rf_model.predict(X_test_scaled))
 
-# ৫. PyTorch: Deep Learning Model (Neural Network)
+# 5. PyTorch: Deep Learning Model (Neural Network)
 class SensorNN(nn.Module):
     def __init__(self):
         super(SensorNN, self).__init__()
